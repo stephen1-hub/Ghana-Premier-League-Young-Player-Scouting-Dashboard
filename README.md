@@ -11,6 +11,7 @@ The dashboard is designed to help scouts and football analytics teams screen eme
 - Inspect missing, constant, and zero-filled metrics.
 - Flag goals recorded alongside zero expected goals (xG) for source verification.
 - Export the filtered player table to CSV.
+# Live dashboard: https://ghana-premier-league-young-player-scouting-dashboard-helqptrfj.streamlit.app/
 # Tools
 - Python
 - Pandas and NumPy
