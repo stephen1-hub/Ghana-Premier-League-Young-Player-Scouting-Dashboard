@@ -1,0 +1,7 @@
+ghana-pl-scouting/
+├── app50.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+└── screenshots/
+    └── dashboard-overview.png
