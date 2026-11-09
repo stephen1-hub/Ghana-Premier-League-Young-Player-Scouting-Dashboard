@@ -4,7 +4,7 @@ import numpy as np
 import plotly.express as px
 
 # ============================================================
-# Ghana Premier League 2026/27 — Matchweek 8 Scouting Dashboard
+# Ghana Premier League 2026/27 — Matchweek 10 Scouting Dashboard
 # ============================================================
 
 st.set_page_config(
