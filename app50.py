@@ -11,6 +11,7 @@ DATA_FILE = Path(__file__).resolve().parent / "ghana-ghana-premier-league-player
 
 st.title("⚽ Ghana Premier League 2026/27")
 st.subheader("Young Player Scouting Dashboard")
+st.caption("Early-season snapshot · clubs have played 5–10 matches")
 st.caption("Provisional player-statistics snapshot. Check data quality before drawing scouting conclusions.")
 
 @st.cache_data
