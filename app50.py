@@ -84,7 +84,7 @@ if chosen_clubs and "Current Club" in filtered:
     filtered = filtered[filtered["Current Club"].astype(str).isin(chosen_clubs)]
 
 scorers_all = df[df["goals_overall"].gt(0)].copy()
-scorers_all = scorers_all.sort_values(["goals_per90_calc", "goals_overall"], ascending=False, na_position="last")
+scorers_all = scorers_all.sort_values(["goals_overall", "goals_per90_calc"], ascending=False, na_position="last")
 
 c1, c2, c3 = st.columns(3)
 c1.metric("Named player records", f"{len(df):,}")
