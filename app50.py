@@ -134,17 +134,17 @@ for i, (heading, body) in enumerate(insights[:4]):
         st.markdown(f'<div class="insight-card"><h4>{heading}</h4><p>{body}</p></div>', unsafe_allow_html=True)
 
 st.subheader("Explore the numbers")
-st.markdown('<div class="section-note">Charts use the full dataset unless their title says “filtered”. Use the sidebar to narrow the scouting pool.</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-note">All charts and the player table below respond to the sidebar filters. Clear filters to return to the full dataset.</div>', unsafe_allow_html=True)
 left, right = st.columns(2)
 with left:
-    club_goals = df.groupby("Current Club", dropna=True)["goals_overall"].sum().sort_values(ascending=False).head(18).reset_index()
+    club_goals = filtered.groupby("Current Club", dropna=True)["goals_overall"].sum().sort_values(ascending=False).head(18).reset_index()
     if not club_goals.empty:
         fig = px.bar(club_goals.sort_values("goals_overall"), x="goals_overall", y="Current Club", orientation="h",
                      labels={"goals_overall":"Goals","Current Club":"Club"}, title="Goals by club")
         fig.update_layout(height=430, margin=dict(l=8,r=8,t=55,b=8), showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
 with right:
-    pos = df.groupby("scouting_group", dropna=True).agg(Goals=("goals_overall","sum"), Players=("full_name","nunique")).reset_index()
+    pos = filtered.groupby("scouting_group", dropna=True).agg(Goals=("goals_overall","sum"), Players=("full_name","nunique")).reset_index()
     if not pos.empty:
         fig = px.bar(pos, x="scouting_group", y="Goals", color="scouting_group",
                      labels={"scouting_group":"Position group"}, title="Goals by position group")
@@ -153,7 +153,7 @@ with right:
 
 left, right = st.columns(2)
 with left:
-    age_df = df.dropna(subset=["age"]).copy()
+    age_df = filtered.dropna(subset=["age"]).copy()
     age_df["Age band"] = pd.cut(age_df["age"], bins=[0,18,21,24,28,100], labels=["≤18","19–21","22–24","25–28","29+"], right=True)
     age_summary = age_df.groupby("Age band", observed=False).agg(Players=("full_name","nunique"), Goals=("goals_overall","sum")).reset_index()
     if not age_summary.empty:
@@ -175,10 +175,10 @@ with right:
         st.info("No records match the current filters.")
 
 st.subheader("Scorer table")
-st.caption("Search and filter the full list of named goalscorers. This table is independent of the age and minutes filters.")
+st.caption("This table follows the sidebar filters. Use the search box and club selector for additional narrowing.")
 search = st.text_input("Search player or club", placeholder="Type a name or club")
 club_filter = st.selectbox("Scorer club", ["All clubs"] + clubs)
-scorer_view = scorers.copy()
+scorer_view = scorers[scorers.index.isin(filtered.index)].copy()
 if search:
     mask = scorer_view["full_name"].str.contains(search, case=False, na=False)
     if "Current Club" in scorer_view:
