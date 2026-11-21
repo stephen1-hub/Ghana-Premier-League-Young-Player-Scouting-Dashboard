@@ -175,10 +175,10 @@ with right:
         st.info("No records match the current filters.")
 
 st.subheader("Scorer table")
-st.caption("This table follows the sidebar filters. Use the search box and club selector for additional narrowing.")
+st.caption("Full-dataset goalscorers, ranked by goals then goals per 90. This table is independent of sidebar age, minutes, position and club filters; use the search and club controls below to narrow it.")
 search = st.text_input("Search player or club", placeholder="Type a name or club")
 club_filter = st.selectbox("Scorer club", ["All clubs"] + clubs)
-scorer_view = scorers[scorers.index.isin(filtered.index)].copy()
+scorer_view = scorers.copy()
 if search:
     mask = scorer_view["full_name"].str.contains(search, case=False, na=False)
     if "Current Club" in scorer_view:
