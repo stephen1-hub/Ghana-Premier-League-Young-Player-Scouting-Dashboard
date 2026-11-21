@@ -137,10 +137,10 @@ st.subheader("Explore the numbers")
 st.markdown('<div class="section-note">All charts and the player table below respond to the sidebar filters. Clear filters to return to the full dataset.</div>', unsafe_allow_html=True)
 left, right = st.columns(2)
 with left:
-    club_goals = filtered.groupby("Current Club", dropna=True)["goals_overall"].sum().sort_values(ascending=False).head(18).reset_index()
+    club_goals = df.groupby("Current Club", dropna=True)["goals_overall"].sum().sort_values(ascending=False).head(18).reset_index()
     if not club_goals.empty:
         fig = px.bar(club_goals.sort_values("goals_overall"), x="goals_overall", y="Current Club", orientation="h",
-                     labels={"goals_overall":"Goals","Current Club":"Club"}, title="Goals by club")
+                     labels={"goals_overall":"Goals","Current Club":"Club"}, title="Goals by club · full dataset")
         fig.update_layout(height=430, margin=dict(l=8,r=8,t=55,b=8), showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
 with right:
